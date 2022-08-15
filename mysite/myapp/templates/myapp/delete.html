@@ -1,0 +1,22 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+    <h1 class="text-2xl m-10 font-bold">Delete Product</h1>
+    <form class="bg-white shadow-md m-10 w-3/5 rounded px-8 pt-6 py-8" method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Are you sure want to delete the product ?</label>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">{{product.name}}</label>
+        </div>
+
+        <div class="mb-4">
+            <img src="{{product.image.url}}" alt="">
+        </div>
+
+        <input class="bg-red-500 text-white px-5 py-2" type="submit" name="Confirm" value="Confirm">
+
+        <a class="button bg-green-500 text-white px-5 py-3" href="{% url 'myapp:products' %}" >Cancel</a>
+    </form>
+{% endblock %}>

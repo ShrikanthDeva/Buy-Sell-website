@@ -1,0 +1,17 @@
+{
+  "name": "mysite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwind build myapp/static/myapp/src/tw.css -o myapp/static/myapp/styles.css",
+    "watch": "tailwindcss -i myapp/static/myapp/src/tw.css -o myapp/static/myapp/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  },
+  "description": ""
+}
