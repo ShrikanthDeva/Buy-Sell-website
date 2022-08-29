@@ -17,23 +17,50 @@
       <h2 class="text-3xl font-normal mt-0 mb-2 text-gray-500 ">Recent Products</h2>
     </div>
 
-
+    <div class="ml-10 flex items-between">
+      <h2 class="text-lg">Search Products</h2>
+      <form method="get" >
+        <input class="font-bold ml-10 justify-between items-center border text-lg text-gray-700" name="product_name" id="product_name" placeholder="Type a product to search" type="text">
+      </form>
+    </div>
 
     <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 gap-5">
 
       <!-- cards  -->
-      {% for product in products %}
+      {% for product in page_obj %}
       <a href="{% url 'myapp:product_details' product.id %}">      
         <div class="rounded overflow-hidden shadow-lg">
           <img class="w-full" src="{{product.image.url}}" alt="">  
           <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">{{product.name}}</div>
             <div class="font-bold text-xl text-green-500 mb-2"> $ {{product.price}}</div>
+            <div class="font-bold mb-2">Posted by:  <span class="text-indigo-500">{{product.seller_name}}</span></div>
+
             <p class="text-gray-700 text-base">{{product.desc}}</p>
           </div>
         </div>      
       </a>           
       {% endfor %}
     </div>  
+
+    <div class="pagination  flex justify-center items-center mb-20">
+      <span>
+        {% if page_obj.has_previous %}
+          <a class="text-sm font-medium border py-2 px-4 items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page=1">First</a>
+          <a class="text-sm font-medium border py-2 px-4 items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+        <span class="text-sm font-medium border py-2 px-4 items-center inline-flex relative text-green-500 border-green-500 z-10" >
+          Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+        </span>
+        {% if page_obj.has_next %}
+          <a class="text-sm font-medium border py-2 px-4 items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.next_page_number}}">Next</a>
+          <a class="text-sm font-medium border py-2 px-4 items-center inline-flex relative text-green-500 border-green-500 z-10" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+        {% endif %}
+
+
+      </span>
+
+
+    </div>
   {% endblock %}
   

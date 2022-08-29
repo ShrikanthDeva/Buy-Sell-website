@@ -7,7 +7,48 @@
       <div class="mt-5">{{product.name}}</div>
       <div class="mt-5 text-green-500 "> $ {{product.price}}</div>
       <div class="text-gray-700 ">{{product.desc}}</div>
+      <div class="text-gray-700 ">
+        Posted by: 
+        <a href="{% url 'users:sellerprofile' product.seller_name.id %}" >{{product.seller_name}} </a>
+      </div>
+      <div class="text-gray-700 ">Contact Number: {{product.seller_name.profile.contact_number}}</div>
+
+    <div>
+      <button class="bg-green-500 text-white mt-3 px-3 py-2" id="checkout">Checkout</button>
+    </div>  
     </div>
 </div>
+<script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
 
-{% endblock %}
+        var stripe = Stripe('{{ stripe_publishable_key }}')
+        var checkoutButton = document.getElementById('checkout')
+        // var responseClone; //1
+        checkoutButton.addEventListener('click', function(){
+            fetch("{% url 'myapp:api_checkout_session' id=product.id %}", {method:'POST',})
+            .then(function(response){
+                // responseClone = response.clone(); // 2
+                return response.json()
+            })
+            .then(function(session){
+                return stripe.redirectToCheckout({sessionId:session.sessionId})
+            })
+            //  function (rejectionReason) { // 3
+            //   console.log('Error parsing JSON from response:', rejectionReason, responseClone); // 4
+            //   responseClone.text() // 5
+            //   .then(function (bodyText) {
+            //       console.log('Received the following instead of valid JSON:', bodyText); // 6
+              // });
+            .then(function(result){
+                if (result.error){
+                    alert(result.error.message)
+                }
+            })
+            .catch(function(error){
+                console.error('Error:', error)
+            });
+          });
+    </script>
+
+{% endblock %}  
+
