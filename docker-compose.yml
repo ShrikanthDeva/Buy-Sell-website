@@ -1,11 +1,9 @@
-version: '3.9'
+version: '3'
 services: 
   django:
-    image: buysell:1.0
+    build: .
     ports:
       - 8000:8000
-    env_file:
-      - ./.DJANGO_SECRET_KEY
     volumes:
       - sqlyte:/home/django/mysite/
 volumes:
